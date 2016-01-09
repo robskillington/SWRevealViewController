@@ -198,6 +198,13 @@ static CGFloat scaledValue( CGFloat v1, CGFloat min2, CGFloat max2, CGFloat min1
     
     CGRect frame = CGRectMake(xLocation, 0.0f, bounds.size.width, bounds.size.height);
     _frontView.frame = [self hierarchycalFrameAdjustment:frame];
+    [self _updateStatusBarLocation];
+}
+
+- (void)_updateStatusBarLocation
+{
+    UIView *statusBar = [[UIApplication sharedApplication] valueForKey:@"statusBar"];
+    statusBar.frame = CGRectMake(_frontView.frame.origin.x, statusBar.frame.origin.y, statusBar.frame.size.width, statusBar.frame.size.height);
 }
 
 
@@ -218,6 +225,7 @@ static CGFloat scaledValue( CGFloat v1, CGFloat min2, CGFloat max2, CGFloat min1
     // set front view frame
     CGRect frame = CGRectMake(xLocation, 0.0f, bounds.size.width, bounds.size.height);
     _frontView.frame = [self hierarchycalFrameAdjustment:frame];
+    [self _updateStatusBarLocation];
     
     // setup front view shadow path if needed (front view loaded and not removed)
     UIViewController *frontViewController = _c.frontViewController;
